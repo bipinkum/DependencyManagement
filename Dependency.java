@@ -18,7 +18,7 @@ public class Dependency {
         }
     }
 
-    public void execute(String command, String[] tokens){
+    public void execute(String command, String[] tokens,String input){
         if("LIST".equals(command)){
             for(String s:installed_components){
                 System.out.println(s);
@@ -26,6 +26,7 @@ public class Dependency {
             return;
         }
         if("DEPEND".equals(command)){
+            System.out.println(command+" "+ input);
             String item = tokens[1];
             if(dependency_list.containsKey(item)){
                 for(int i=2; i<tokens.length; i++) {
@@ -91,12 +92,11 @@ public class Dependency {
         dependency.installed_components = new HashSet<>();
         dependency.dependency_list = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
-        String input = "";
+        String input = scanner.nextLine();
         while (!"END".equalsIgnoreCase(input)) {
-            input = scanner.nextLine();
             String[] tokens = input.split(" ");
-            dependency.execute(tokens[0], tokens);
+            dependency.execute(tokens[0], tokens,input);
+            input = scanner.nextLine();
         }
-
     }
 }
